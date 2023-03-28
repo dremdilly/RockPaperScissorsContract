@@ -259,23 +259,8 @@ async function game(userChoice) {
 
 async function updateGameResult(gameId) {
 	console.log("Updating game result for gameId:", gameId);
-	const confirmationsNeeded = 1; // Number of block confirmations to wait for
-
-	// Filter events by the indexed parameter (player address)
-	const filter = contract.filters.GameResult(signer._address);
-	const eventLogs = await contract.queryFilter(filter);
-  
-	// Filter events further by gameId in JavaScript
-	const targetEvent = eventLogs.find((event) => event.args.gameId.eq(gameId));
-  
-	const transactionHash = targetEvent.transactionHash;
-  
-	// Wait for the specified number of confirmations for the transaction
-	const receipt = await provider.waitForTransaction(transactionHash, confirmationsNeeded);
-  
-	// Fetch the updated game data
-	const game = await contract.games(gameId);
-	const playerMove = game.playerMove;
+    const game = await contract.games(gameId);
+    const playerMove = game.playerMove;
     const houseMove = game.houseMove;
   
     console.log("playerMove:", playerMove);
