@@ -2,7 +2,7 @@
 
 This is a simple Rock Paper Scissors game implementation using Binance Smart Chain and a smart contract. Users can connect their wallets and play the game by betting a small amount of tBNB (testnet BNB). The game displays the user's and the computer's scores as well as a history of games played.
 
-[**Live Demo**](https://winter-rice-8633.on.fleek.co/)
+[**Live Demo**](https://rps.on.fleek.co//)
 
 ## How to Play
 
