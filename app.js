@@ -167,7 +167,7 @@ async function connectWallet() {
 	const modalProvider = await web3Modal.connect();
 	const provider = new ethers.providers.Web3Provider(modalProvider);
 	const accounts = await provider.listAccounts();
-	signer = provider.getSigner();
+	signer = provider.getSigner(accounts[0]);
 
 	contract = new ethers.Contract(contractAddress, abi, signer);
 	console.log(contract);
@@ -214,12 +214,14 @@ const MIN_BET_WEI = ethers.utils.parseUnits("0.0001", "ether"); // 0.0001 tBNB i
 
 async function game(userChoice) {
     let play;
+	
     const overrides = {
       value: MIN_BET_WEI,
     };
   
     // Event listener функция
     const gameResultListener = (player, gameId, betAmount, payout, event) => {
+	  console.log("GameResult event received:", player, gameId, betAmount, payout, event);
       if (player === signer._address) {
         updateGameResult(gameId);
       }
@@ -248,16 +250,17 @@ async function game(userChoice) {
         // The transaction failed
         console.error("Transaction failed");
         result_p.innerHTML = `Transaction failed`;
-        contract.off("GameResult", gameResultListener);
       }
     } catch (error) {
       console.error("Error during transaction execution:", error);
       result_p.innerHTML = `Transaction failed`;
-      contract.off("GameResult", gameResultListener);
-    }
+    } finally {
+	  contract.off("GameResult", gameResultListener);
+	}
 }
 
 async function updateGameResult(gameId) {
+	console.log("Updating game result for gameId:", gameId);i
     const game = await contract.games(gameId);
     const playerMove = game.playerMove;
     const houseMove = game.houseMove;
@@ -291,7 +294,7 @@ async function updateGameResult(gameId) {
         break;
     }
 
-	addGameToHistory(gameId, playerMove, houseMove);
+	addGameToHistory(gameId, userChoice, computerChoice);
 }
 
 
@@ -313,7 +316,7 @@ async function displayGameHistory() {
 }
   
 function getResult(playerMove, houseMove) {
-    const moveCombination = playerMove.toLowerCase.charAt[0] + houseMove.toLowerCase.charAt[0];
+    const moveCombination = playerMove.toLowerCase().charAt(0) + houseMove.toLowerCase().charAt(0);
 
     switch (moveCombination) {
         case "pr":
