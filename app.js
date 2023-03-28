@@ -313,7 +313,7 @@ async function displayGameHistory() {
 }
   
 function getResult(playerMove, houseMove) {
-    const moveCombination = playerMove.toLowerCase.charAt[0] + houseMove.toLowerCase.charAt[0];
+    const moveCombination = playerMove.toLowerCase().charAt(0) + houseMove.toLowerCase().charAt(0);
 
     switch (moveCombination) {
         case "pr":
