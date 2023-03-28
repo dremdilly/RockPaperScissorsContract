@@ -212,6 +212,8 @@ function draw(userChoice, computerChoice) {
 
 const MIN_BET_WEI = ethers.utils.parseUnits("0.0001", "ether"); // 0.0001 tBNB in wei
 
+let currentGameResultListener;
+
 async function game(userChoice) {
     let play;
 	
@@ -219,21 +221,21 @@ async function game(userChoice) {
       value: MIN_BET_WEI,
     };
   
-    // Event listener функция
-    const gameResultListener = (player, gameId, betAmount, payout, event) => {
-		// Ignore pending events
+	if (currentGameResultListener) {
+		contract.off("GameResult", currentGameResultListener);
+	  }
+	
+	  currentGameResultListener = (player, gameId, betAmount, payout, event) => {
 		if (event.blockNumber === null) {
-			return;
+		  return;
 		}
-		
-		console.log("GameResult event received:", player, gameId, betAmount, payout, event);
+	
 		if (player === signer._address) {
-			updateGameResult(gameId.toNumber());
+		  updateGameResult(gameId);
 		}
-    };
-  
-    // Event listener запуск
-    contract.once("GameResult", gameResultListener);
+	  };
+	
+	  contract.once("GameResult", currentGameResultListener);
   
     switch (userChoice) {
       case "r":
