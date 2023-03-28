@@ -217,8 +217,6 @@ async function game(userChoice) {
 	
     const overrides = {
       value: MIN_BET_WEI,
-	  gasPrice: await signer.provider.getGasPrice(),
-	//   gasLimit: await Math.round(contract.estimateGas.play(0).toNumber()) * 1.2
     };
   
     // Event listener функция
@@ -251,7 +249,6 @@ async function game(userChoice) {
         // The transaction failed
         console.error("Transaction failed");
         result_p.innerHTML = `Transaction failed`;
-        contract.off("GameResult", gameResultListener);
       }
     } catch (error) {
       console.error("Error during transaction execution:", error);
