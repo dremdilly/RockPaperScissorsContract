@@ -167,7 +167,7 @@ async function connectWallet() {
 	const modalProvider = await web3Modal.connect();
 	const provider = new ethers.providers.Web3Provider(modalProvider);
 	const accounts = await provider.listAccounts();
-	signer = provider.getSigner();
+	signer = provider.getSigner(accounts[0]);
 
 	contract = new ethers.Contract(contractAddress, abi, signer);
 	console.log(contract);
@@ -291,7 +291,7 @@ async function updateGameResult(gameId) {
         break;
     }
 
-	addGameToHistory(gameId, playerMove, houseMove);
+	addGameToHistory(gameId, userChoice, computerChoice);
 }
 
 
@@ -313,7 +313,7 @@ async function displayGameHistory() {
 }
   
 function getResult(playerMove, houseMove) {
-    const moveCombination = playerMove.toLowerCase.charAt[0] + houseMove.toLowerCase.charAt[0];
+    const moveCombination = playerMove.toLowerCase().charAt(0) + houseMove.toLowerCase().charAt(0);
 
     switch (moveCombination) {
         case "pr":
