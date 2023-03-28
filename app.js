@@ -260,7 +260,7 @@ async function game(userChoice) {
 }
 
 async function updateGameResult(gameId) {
-	console.log("Updating game result for gameId:", gameId);i
+	console.log("Updating game result for gameId:", gameId);
     const game = await contract.games(gameId);
     const playerMove = game.playerMove;
     const houseMove = game.houseMove;
