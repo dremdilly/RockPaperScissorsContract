@@ -228,7 +228,7 @@ async function game(userChoice) {
     };
   
     // Event listener запуск
-    contract.on("GameResult", gameResultListener);
+    contract.once("GameResult", gameResultListener);
   
     switch (userChoice) {
       case "r":
@@ -254,9 +254,7 @@ async function game(userChoice) {
     } catch (error) {
       console.error("Error during transaction execution:", error);
       result_p.innerHTML = `Transaction failed`;
-    } finally {
-	  contract.off("GameResult", gameResultListener);
-	}
+    }
 }
 
 async function updateGameResult(gameId) {
