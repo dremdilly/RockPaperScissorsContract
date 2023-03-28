@@ -221,10 +221,15 @@ async function game(userChoice) {
   
     // Event listener функция
     const gameResultListener = (player, gameId, betAmount, payout, event) => {
-	  console.log("GameResult event received:", player, gameId, betAmount, payout, event);
-      if (player === signer._address) {
-        updateGameResult(gameId.toNumber());
-      }
+		// Ignore pending events
+		if (event.blockNumber === null) {
+			return;
+		}
+		
+		console.log("GameResult event received:", player, gameId, betAmount, payout, event);
+		if (player === signer._address) {
+			updateGameResult(gameId.toNumber());
+		}
     };
   
     // Event listener запуск
