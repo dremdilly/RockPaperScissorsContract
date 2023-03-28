@@ -223,7 +223,7 @@ async function game(userChoice) {
     const gameResultListener = (player, gameId, betAmount, payout, event) => {
 	  console.log("GameResult event received:", player, gameId, betAmount, payout, event);
       if (player === signer._address) {
-        updateGameResult(gameId);
+        updateGameResult(gameId.toNumber());
       }
     };
   
