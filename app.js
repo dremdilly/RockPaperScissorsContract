@@ -214,8 +214,11 @@ const MIN_BET_WEI = ethers.utils.parseUnits("0.0001", "ether"); // 0.0001 tBNB i
 
 async function game(userChoice) {
     let play;
+	
     const overrides = {
       value: MIN_BET_WEI,
+	  gasPrice: await signer.provider.getGasPrice(),
+	//   gasLimit: await Math.round(contract.estimateGas.play(0).toNumber()) * 1.2
     };
   
     // Event listener функция
@@ -253,8 +256,9 @@ async function game(userChoice) {
     } catch (error) {
       console.error("Error during transaction execution:", error);
       result_p.innerHTML = `Transaction failed`;
-      contract.off("GameResult", gameResultListener);
-    }
+    } finally {
+	  contract.off("GameResult", gameResultListener);
+	}
 }
 
 async function updateGameResult(gameId) {
