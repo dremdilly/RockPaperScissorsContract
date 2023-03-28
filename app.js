@@ -167,7 +167,7 @@ async function connectWallet() {
 	const modalProvider = await web3Modal.connect();
 	const provider = new ethers.providers.Web3Provider(modalProvider);
 	const accounts = await provider.listAccounts();
-	signer = provider.getSigner();
+	signer = provider.getSigner(accounts[0]);
 
 	contract = new ethers.Contract(contractAddress, abi, signer);
 	console.log(contract);
