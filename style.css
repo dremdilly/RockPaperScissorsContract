@@ -74,8 +74,8 @@ header > h1 {
     margin: 0 20px;
     padding: 10px;
     display: inline-block;
-    height: 420px;
-    width: 420px;
+    height: 300px;
+    width: 300px;
 }
 
 .choice:hover {
