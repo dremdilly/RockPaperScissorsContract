@@ -259,6 +259,7 @@ async function game(userChoice) {
 
 async function updateGameResult(gameId) {
 	console.log("Updating game result for gameId:", gameId);
+	await new Promise((resolve) => setTimeout(resolve, 1000));
     const game = await contract.games(gameId);
     const playerMove = game.playerMove;
     const houseMove = game.houseMove;
